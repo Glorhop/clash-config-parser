@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clash 配置管理</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Clash 配置管理</h1>
+            <a href="/logout" class="btn btn-sm btn-secondary">退出</a>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab active" data-tab="configs">配置管理</button>
+            <button class="tab" data-tab="rules">规则编辑</button>
+            <button class="tab" data-tab="downloads">文件托管</button>
+        </nav>
+
+        <!-- Configs Tab -->
+        <section id="tab-configs" class="tab-content active">
+            <div class="toolbar">
+                <button class="btn btn-primary" id="btn-add-config">添加配置</button>
+                <button class="btn btn-secondary" id="btn-clear-cache">清除缓存</button>
+            </div>
+
+            <table id="configs-table">
+                <thead>
+                    <tr>
+                        <th>名称</th>
+                        <th>URL</th>
+                        <th>类型</th>
+                        <th>选项</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
+
+        <!-- Rules Tab -->
+        <section id="tab-rules" class="tab-content">
+            <div class="toolbar">
+                <button class="btn btn-primary" id="btn-save-rules">保存规则</button>
+            </div>
+            <textarea id="rules-editor" spellcheck="false" placeholder="每行一条规则，# 开头为注释"></textarea>
+        </section>
+
+        <!-- Downloads Tab -->
+        <section id="tab-downloads" class="tab-content">
+            <div class="toolbar">
+                <button class="btn btn-secondary" id="btn-refresh-downloads">刷新</button>
+            </div>
+
+            <table id="downloads-table">
+                <thead>
+                    <tr>
+                        <th>名称</th>
+                        <th>类型</th>
+                        <th>大小</th>
+                        <th>URL / 命令</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
+
+        <!-- Config Modal -->
+        <div class="modal-overlay" id="config-modal">
+            <div class="modal">
+                <h3 id="modal-title">添加配置</h3>
+                <form id="config-form">
+                    <label>名称
+                        <input type="text" name="name" id="cfg-name" required>
+                    </label>
+                    <label>URL
+                        <input type="url" name="url" id="cfg-url" required>
+                    </label>
+                    <label>类型
+                        <select name="type" id="cfg-type">
+                            <option value="yaml">YAML</option>
+                            <option value="base64">Base64</option>
+                        </select>
+                    </label>
+                    <div class="checkbox-group">
+                        <label title="注入 VIP 家宽节点和 AI 专线分流规则（Claude/OpenAI/Gemini）"><input type="checkbox" name="enable_vip" id="cfg-vip" checked> AI 专线</label>
+                        <label title="不注入 config/rules.txt 自定义规则，只保留最基本的 DIRECT 规则"><input type="checkbox" name="skip_rules_file" id="cfg-skip-rules"> 跳过规则</label>
+                        <label title="启用 HuggingFace 多通道负载均衡，自动选取港日新专线节点轮询下载"><input type="checkbox" name="default_load_balance" id="cfg-load-balance"> HF 负载均衡</label>
+                    </div>
+                    <label>节点地区
+                        <select name="region_filter_mode" id="cfg-region-mode">
+                            <option value="off">不过滤</option>
+                            <option value="include">只保留所选地区</option>
+                            <option value="exclude">排除所选地区</option>
+                        </select>
+                    </label>
+                    <div class="region-picker" id="cfg-region-picker"></div>
+                    <p class="hint">AI 专线：注入 VIP 家宽节点，Claude/OpenAI/Gemini 走专线<br>跳过规则：不注入 config/rules.txt，只保留 DIRECT 基础规则<br>HF 负载均衡：HuggingFace 下载走多节点轮询（优先港日新专线）</p>
+                    <div class="modal-actions">
+                        <button type="submit" class="btn btn-primary">保存</button>
+                        <button type="button" class="btn btn-secondary" id="btn-cancel-modal">取消</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Toast -->
+        <div id="toast" class="toast"></div>
+    </div>
+    <script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: clash-config-parser
+    command: gunicorn -w 4 --timeout 120 -b 0.0.0.0:8200 clash_config_parser.app:app
+    environment:
+      REDIS_URL: redis://redis:6379/0
+      CACHE_TTL_SECONDS: 300
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
+      SECRET_KEY: ${SECRET_KEY:-change-me-in-production}
+      DEFAULT_CONFIGS_JSON: ${DEFAULT_CONFIGS_JSON:-}
+      VIP_NODE_JSON: ${VIP_NODE_JSON:-}
+    volumes:
+      - ./config/rules.txt:/app/config/rules.txt
+      - ./data:/app/data
+      - ./downloads:/app/downloads
+    ports:
+      - "8200:8200"
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  redis:
+    image: redis:7.2-alpine
+    container_name: clash-config-redis
+    command: redis-server --save "" --appendonly no
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+
+volumes:
+  redis-data:

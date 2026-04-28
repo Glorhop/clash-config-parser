@@ -1,0 +1,84 @@
+# 必加规则：会被插入到规则前部（优先级较高）
+# 注意：如果这里引用的策略组在当前配置不存在，app.py 会自动映射到可用主策略组。
+# 建议保留 DIRECT/REJECT 这类硬策略不变。
+
+DOMAIN-SUFFIX,1008761.xyz,DIRECT
+DOMAIN-SUFFIX,sora.com,💎 AI 专线
+
+# ==========================================
+# AI 数据集与模型下载分流规则 (HF-Multi-Channel)
+# ==========================================
+
+# --- 1. Hugging Face 家族 ---
+DOMAIN-SUFFIX,huggingface.co,HF-Multi-Channel
+DOMAIN-SUFFIX,hf.co,HF-Multi-Channel
+DOMAIN-KEYWORD,huggingface,HF-Multi-Channel
+DOMAIN-SUFFIX,cdn-lfs.huggingface.co,HF-Multi-Channel
+DOMAIN-SUFFIX,huggingfaceusercontent.com,HF-Multi-Channel
+DOMAIN-SUFFIX,huggingface.cloud,HF-Multi-Channel
+DOMAIN-SUFFIX,hf.space,HF-Multi-Channel
+
+# --- 2. 指定的其他网站 ---
+# YouTube
+DOMAIN-KEYWORD,youtube,HF-Multi-Channel
+DOMAIN-SUFFIX,youtube.com,HF-Multi-Channel
+# Google Drive
+DOMAIN-SUFFIX,drive.google.com,HF-Multi-Channel
+DOMAIN-SUFFIX,googleusercontent.com,HF-Multi-Channel
+# Dataverse
+DOMAIN-SUFFIX,dataverse.tdl.org,HF-Multi-Channel
+
+# --- 3. 补充：主流 AI 数据集、模型托管平台 ---
+# Kaggle
+DOMAIN-SUFFIX,kaggle.com,HF-Multi-Channel
+DOMAIN-SUFFIX,kaggleusercontent.com,HF-Multi-Channel
+
+# Zenodo
+DOMAIN-SUFFIX,zenodo.org,HF-Multi-Channel
+
+# Papers with Code
+DOMAIN-SUFFIX,paperswithcode.com,HF-Multi-Channel
+
+# Civitai
+DOMAIN-SUFFIX,civitai.com,HF-Multi-Channel
+
+# LAION
+DOMAIN-SUFFIX,laion.ai,HF-Multi-Channel
+
+# --- 4. 补充：底层云存储 ---
+DOMAIN-SUFFIX,storage.googleapis.com,HF-Multi-Channel
+DOMAIN-SUFFIX,s3.amazonaws.com,HF-Multi-Channel
+
+# --- 5. 补充：代码与 Agent 框架依赖获取 ---
+# GitHub
+DOMAIN-SUFFIX,github.com,HF-Multi-Channel
+DOMAIN-SUFFIX,githubusercontent.com,HF-Multi-Channel
+DOMAIN-SUFFIX,raw.githubusercontent.com,HF-Multi-Channel
+
+
+DOMAIN-SUFFIX,apache.org,🔰 国外流量
+DOMAIN-SUFFIX,docker.io,🔰 国外流量
+DOMAIN-SUFFIX,docker.com,🔰 国外流量
+DOMAIN-SUFFIX,elastic.co,🔰 国外流量
+DOMAIN-SUFFIX,elastic.com,🔰 国外流量
+DOMAIN-SUFFIX,gcr.io,🔰 国外流量
+DOMAIN-SUFFIX,gitlab.com,🔰 国外流量
+DOMAIN-SUFFIX,gitlab.io,🔰 国外流量
+DOMAIN-SUFFIX,jitpack.io,🔰 国外流量
+DOMAIN-SUFFIX,maven.org,🔰 国外流量
+DOMAIN-SUFFIX,medium.com,🔰 国外流量
+DOMAIN-SUFFIX,mvnrepository.com,🔰 国外流量
+DOMAIN-SUFFIX,quay.io,🔰 国外流量
+DOMAIN-SUFFIX,reddit.com,🔰 国外流量
+DOMAIN-SUFFIX,redhat.com,🔰 国外流量
+DOMAIN-SUFFIX,sonatype.org,🔰 国外流量
+DOMAIN-SUFFIX,sourcegraph.com,🔰 国外流量
+DOMAIN-SUFFIX,spring.io,🔰 国外流量
+DOMAIN-SUFFIX,spring.net,🔰 国外流量
+DOMAIN-SUFFIX,stackoverflow.com,🔰 国外流量
+DOMAIN-SUFFIX,github.com,🔰 国外流量
+DOMAIN-SUFFIX,github.io,🔰 国外流量
+DOMAIN-SUFFIX,githubapp.com,🔰 国外流量
+DOMAIN-SUFFIX,githubassets.com,🔰 国外流量
+DOMAIN-SUFFIX,githubusercontent.com,🔰 国外流量
+

@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.venv/
+data/configs.json
+output.yml
+1712819530755.yml
+.claude/
+.codex
+.env
+secrets/
