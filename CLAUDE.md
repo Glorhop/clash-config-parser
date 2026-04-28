@@ -17,8 +17,6 @@ gunicorn -w 4 -b 0.0.0.0:8200 clash_config_parser.app:app
 # Docker
 docker compose up --build                        # App + Redis stack
 
-# CLI testing
-python tools/test_converter.py <input.yml> [output.yml] [--tun]
 ```
 
 ## API Endpoints
@@ -37,8 +35,6 @@ python tools/test_converter.py <input.yml> [output.yml] [--tun]
 - `_inject_tun()` - Adds TUN/DNS configuration at top of config when enabled
 - `_enforce_rules()` - Prepends required routing rules (loaded from `config/rules.txt` or defaults)
 - Background thread watches `config/rules.txt` for changes and clears caches
-
-**tools/test_converter.py** - Standalone CLI tool duplicating the conversion logic for local file testing
 
 ## Key Configuration
 

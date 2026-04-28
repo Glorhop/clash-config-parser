@@ -25,8 +25,6 @@ clash-config-parser/
 │   ├── geosite.dat
 │   ├── mihomo-linux-amd64-v3-v1.19.18.deb
 │   └── mihomo-linux-arm64-alpha-56c3462.gz
-├── tools/
-│   └── test_converter.py   # 本地 CLI 测试工具
 ├── requirements.txt    # Python 依赖
 ├── Dockerfile
 └── docker-compose.yml
@@ -169,10 +167,4 @@ Docker 部署时这些路径已通过卷挂载持久化，容器重建不会丢�
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 python -m clash_config_parser.app    # 启动开发服务器，端口 5000
-```
-
-## CLI 测试工具
-
-```bash
-python tools/test_converter.py <输入文件.yml> [输出文件.yml] [--tun]
 ```
