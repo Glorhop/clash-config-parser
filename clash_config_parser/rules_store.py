@@ -3,7 +3,7 @@ import time
 import threading
 import logging
 
-from .constants import DEFAULT_REQUIRED_RULES, REQUIRED_RULES_FILE
+from .constants import REQUIRED_RULES_FILE
 from .cache import clear_cache
 
 logger = logging.getLogger("clash-config-parser")
@@ -11,7 +11,7 @@ logger = logging.getLogger("clash-config-parser")
 RULES_SCAN_INTERVAL = int(os.getenv("RULES_SCAN_INTERVAL", "15"))
 
 _rules_lock = threading.Lock()
-_required_rules = list(DEFAULT_REQUIRED_RULES)
+_required_rules = []
 _rules_file_mtime = None
 
 
@@ -25,7 +25,7 @@ def reload_rules():
     """Load rules.txt once and refresh cache when it changes."""
     global _required_rules, _rules_file_mtime
 
-    new_rules = list(DEFAULT_REQUIRED_RULES)
+    new_rules = []
     new_mtime = None
 
     if REQUIRED_RULES_FILE:
@@ -35,13 +35,7 @@ def reload_rules():
             with open(REQUIRED_RULES_FILE, "r", encoding="utf-8") as f:
                 lines = [line.strip() for line in f.readlines()]
             parsed = [line for line in lines if line and not line.startswith("#")]
-            if parsed:
-                new_rules = parsed
-            else:
-                logger.warning(
-                    "REQUIRED_RULES_FILE=%s empty or only comments, falling back to defaults",
-                    REQUIRED_RULES_FILE,
-                )
+            new_rules = parsed
         except OSError as exc:
             logger.warning("failed to read REQUIRED_RULES_FILE=%s: %s", REQUIRED_RULES_FILE, exc)
 

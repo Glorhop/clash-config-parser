@@ -62,35 +62,6 @@ BLOCK_KEYWORDS = [
 MULTIPLIER_REGEX = re.compile(r'\b(10|[245])x\b', re.IGNORECASE)
 LATENCY_GROUPS = {"🔰 国外流量", "💬 OpenAi"}
 
-DEFAULT_REQUIRED_RULES = [
-    "DOMAIN-SUFFIX,apache.org,🔰 国外流量",
-    "DOMAIN-SUFFIX,docker.io,🔰 国外流量",
-    "DOMAIN-SUFFIX,docker.com,🔰 国外流量",
-    "DOMAIN-SUFFIX,elastic.co,🔰 国外流量",
-    "DOMAIN-SUFFIX,elastic.com,🔰 国外流量",
-    "DOMAIN-SUFFIX,gcr.io,🔰 国外流量",
-    "DOMAIN-SUFFIX,gitlab.com,🔰 国外流量",
-    "DOMAIN-SUFFIX,gitlab.io,🔰 国外流量",
-    "DOMAIN-SUFFIX,jitpack.io,🔰 国外流量",
-    "DOMAIN-SUFFIX,maven.org,🔰 国外流量",
-    "DOMAIN-SUFFIX,medium.com,🔰 国外流量",
-    "DOMAIN-SUFFIX,mvnrepository.com,🔰 国外流量",
-    "DOMAIN-SUFFIX,quay.io,🔰 国外流量",
-    "DOMAIN-SUFFIX,reddit.com,🔰 国外流量",
-    "DOMAIN-SUFFIX,redhat.com,🔰 国外流量",
-    "DOMAIN-SUFFIX,sonatype.org,🔰 国外流量",
-    "DOMAIN-SUFFIX,sourcegraph.com,🔰 国外流量",
-    "DOMAIN-SUFFIX,spring.io,🔰 国外流量",
-    "DOMAIN-SUFFIX,spring.net,🔰 国外流量",
-    "DOMAIN-SUFFIX,stackoverflow.com,🔰 国外流量",
-    "DOMAIN-SUFFIX,github.com,🔰 国外流量",
-    "DOMAIN-SUFFIX,github.io,🔰 国外流量",
-    "DOMAIN-SUFFIX,githubapp.com,🔰 国外流量",
-    "DOMAIN-SUFFIX,githubassets.com,🔰 国外流量",
-    "DOMAIN-SUFFIX,githubusercontent.com,🔰 国外流量",
-    "DOMAIN-SUFFIX,grafana.com,🔰 国外流量",
-]
-
 CACHE_KEY_PREFIX = "clash-cache:"
 MINIMAL_REQUIRED_RULES = [
     "DOMAIN-SUFFIX,1008761.xyz,DIRECT",
