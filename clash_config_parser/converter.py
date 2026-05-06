@@ -97,11 +97,7 @@ def _is_hk_or_dedicated(name: str) -> bool:
 
 
 def inject_vip_and_ai_rules(config):
-    """强行将 VIP 家宽节点、专属策略组和分流规则注入到配置中"""
-    if not isinstance(VIP_NODE, dict) or not VIP_NODE.get("name"):
-        logger.warning("VIP node injection skipped: VIP_NODE_JSON is not configured")
-        return
-
+    """Inject the AI route group, optional VIP proxy, and AI routing rules."""
     def _ensure_map(d):
         if isinstance(d, CommentedMap):
             return d
@@ -115,20 +111,39 @@ def inject_vip_and_ai_rules(config):
                 cm[k] = v
         return cm
 
-    # 1. 注入 VIP 节点 (Proxy)
+    def _unique_names(names):
+        unique = []
+        for name in names:
+            if name and name not in unique:
+                unique.append(name)
+        return unique
+
+    vip_name = None
+
+    # 1. 注入可选 VIP 节点 (Proxy)
     if 'proxies' not in config or config['proxies'] is None:
         config['proxies'] = []
 
-    vip_proxy = _ensure_map(dict(VIP_NODE))
-    existing_names = {p.get('name') for p in config['proxies'] if isinstance(p, (dict, CommentedMap))}
-    if vip_proxy['name'] not in existing_names:
-        config['proxies'].insert(0, vip_proxy)
+    if isinstance(VIP_NODE, dict) and VIP_NODE.get("name"):
+        vip_name = VIP_NODE["name"]
+        vip_proxy = _ensure_map(dict(VIP_NODE))
+        existing_names = {
+            p.get('name') for p in config['proxies']
+            if isinstance(p, (dict, CommentedMap))
+        }
+        if vip_name not in existing_names:
+            config['proxies'].insert(0, vip_proxy)
+    else:
+        logger.warning("VIP_NODE_JSON is not configured; AI group will use existing proxies")
 
     # 2. 注入 AI 专线策略组 (Proxy Group)
     if 'proxy-groups' not in config or config['proxy-groups'] is None:
         config['proxy-groups'] = []
 
-    airport_names = [p.get('name') for p in config['proxies'] if p.get('name') != VIP_NODE['name']]
+    airport_names = [
+        p.get('name') for p in config['proxies']
+        if isinstance(p, (dict, CommentedMap)) and p.get('name') and p.get('name') != vip_name
+    ]
 
     group_names = [
         g.get('name') for g in config['proxy-groups']
@@ -138,25 +153,66 @@ def inject_vip_and_ai_rules(config):
         (name for name in group_names if name in ("♻️ 自动选择", "自动选择") or "自动选择" in str(name)),
         None,
     )
+    ai_like_group = next(
+        (
+            name for name in group_names
+            if name != VIP_GROUP
+            and (
+                any(
+                    token in str(name).lower()
+                    for token in ("openai", "chatgpt", "gpt", "claude", "gemini")
+                )
+                or "AI" in str(name)
+            )
+        ),
+        None,
+    )
+    primary_group = next(
+        (
+            name for name in group_names
+            if name != VIP_GROUP and name in ("🔰 国外流量", "🚀 节点选择", "PROXY", "Proxy", "一分机场")
+        ),
+        None,
+    )
 
-    fallback_proxies = []
-    if auto_group:
-        fallback_proxies.append(auto_group)
-    fallback_proxies.extend(airport_names[:3])
+    dedicated_proxies = [
+        name for name in airport_names
+        if _is_dedicated_route(name)
+    ]
+    low_rate_proxies = [
+        name for name in airport_names
+        if LOW_MULTIPLIER_KEYWORD in name
+    ]
 
-    unique_fallback = []
-    for name in fallback_proxies:
-        if name and name not in unique_fallback:
-            unique_fallback.append(name)
-    fallback_proxies = unique_fallback
+    ai_group_proxies = _unique_names(
+        [vip_name, ai_like_group, auto_group, primary_group]
+        + dedicated_proxies[:LOAD_BALANCE_MAX_PROXIES]
+        + low_rate_proxies[:LOAD_BALANCE_MAX_PROXIES]
+        + airport_names[:LOAD_BALANCE_MAX_PROXIES]
+    )
+    if not ai_group_proxies:
+        ai_group_proxies = ["DIRECT"]
 
     vip_group = _ensure_map({
         "name": VIP_GROUP,
         "type": "select",
-        "proxies": [VIP_NODE['name']] + fallback_proxies
+        "proxies": ai_group_proxies
     })
 
-    if not any(g.get('name') == vip_group['name'] for g in config['proxy-groups']):
+    existing_group = next(
+        (
+            g for g in config['proxy-groups']
+            if isinstance(g, (dict, CommentedMap)) and g.get('name') == vip_group['name']
+        ),
+        None,
+    )
+    if existing_group:
+        existing_proxies = existing_group.get('proxies') or []
+        if not isinstance(existing_proxies, (list, CommentedSeq)):
+            existing_proxies = [existing_proxies]
+        existing_group['type'] = existing_group.get('type') or 'select'
+        existing_group['proxies'] = _unique_names(ai_group_proxies + list(existing_proxies))
+    else:
         config['proxy-groups'].insert(0, vip_group)
 
     # 3. 注入分流规则 (Rule)

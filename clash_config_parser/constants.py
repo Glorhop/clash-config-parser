@@ -29,7 +29,14 @@ AI_RULES = [
     # OpenAI 规则
     f"DOMAIN-SUFFIX,openai.com,{VIP_GROUP}",
     f"DOMAIN-SUFFIX,api.openai.com,{VIP_GROUP}",
+    f"DOMAIN-SUFFIX,auth0.openai.com,{VIP_GROUP}",
     f"DOMAIN-SUFFIX,chatgpt.com,{VIP_GROUP}",
+    f"DOMAIN-SUFFIX,oaistatic.com,{VIP_GROUP}",
+    f"DOMAIN-SUFFIX,oaiusercontent.com,{VIP_GROUP}",
+    f"DOMAIN-SUFFIX,openaiusercontent.com,{VIP_GROUP}",
+    f"DOMAIN-SUFFIX,sora.com,{VIP_GROUP}",
+    f"DOMAIN-KEYWORD,openai,{VIP_GROUP}",
+    f"DOMAIN-KEYWORD,chatgpt,{VIP_GROUP}",
     # Gemini 规则
     f"DOMAIN-SUFFIX,gemini.google.com,{VIP_GROUP}",
     f"DOMAIN-SUFFIX,generativelanguage.googleapis.com,{VIP_GROUP}",

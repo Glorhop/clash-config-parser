@@ -86,7 +86,7 @@
                         </select>
                     </label>
                     <div class="checkbox-group">
-                        <label title="注入 VIP 家宽节点和 AI 专线分流规则（Claude/OpenAI/Gemini）"><input type="checkbox" name="enable_vip" id="cfg-vip" checked> AI 专线</label>
+                        <label title="注入 AI 专线分组和分流规则（Claude/OpenAI/ChatGPT/Gemini），VIP 节点会优先使用"><input type="checkbox" name="enable_vip" id="cfg-vip" checked> AI 专线</label>
                         <label title="不注入 config/rules.txt 自定义规则，只保留最基本的 DIRECT 规则"><input type="checkbox" name="skip_rules_file" id="cfg-skip-rules"> 跳过规则</label>
                         <label title="启用 HuggingFace 多通道负载均衡，自动选取港日新专线节点轮询下载"><input type="checkbox" name="default_load_balance" id="cfg-load-balance"> HF 负载均衡</label>
                     </div>
@@ -98,7 +98,7 @@
                         </select>
                     </label>
                     <div class="region-picker" id="cfg-region-picker"></div>
-                    <p class="hint">AI 专线：注入 VIP 家宽节点，Claude/OpenAI/Gemini 走专线<br>跳过规则：不注入 config/rules.txt，只保留 DIRECT 基础规则<br>HF 负载均衡：HuggingFace 下载走多节点轮询（优先港日新专线）</p>
+                    <p class="hint">AI 专线：Claude/OpenAI/ChatGPT/Gemini 走 💎 AI 专线，VIP 节点存在时优先使用<br>跳过规则：不注入 config/rules.txt，只保留 DIRECT 基础规则<br>HF 负载均衡：HuggingFace 下载走多节点轮询（优先港日新专线）</p>
                     <div class="modal-actions">
                         <button type="submit" class="btn btn-primary">保存</button>
                         <button type="button" class="btn btn-secondary" id="btn-cancel-modal">取消</button>
