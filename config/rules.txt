@@ -18,10 +18,32 @@ DOMAIN-SUFFIX,huggingfaceusercontent.com,HF-Multi-Channel
 DOMAIN-SUFFIX,huggingface.cloud,HF-Multi-Channel
 DOMAIN-SUFFIX,hf.space,HF-Multi-Channel
 
-# --- 2. 指定的其他网站 ---
-# YouTube
+# --- 2. 指定的其他网站 (含视频流 CDN) ---
+# --- 2. 视频流媒体与学习平台 (YouTube 家族及公开课) ---
+# YouTube 核心与流媒体
 DOMAIN-KEYWORD,youtube,HF-Multi-Channel
 DOMAIN-SUFFIX,youtube.com,HF-Multi-Channel
+DOMAIN-SUFFIX,youtu.be,HF-Multi-Channel
+DOMAIN-SUFFIX,googlevideo.com,HF-Multi-Channel
+# YouTube 静态资源 (封面、头像等)
+DOMAIN-SUFFIX,ytimg.com,HF-Multi-Channel
+DOMAIN-SUFFIX,ggpht.com,HF-Multi-Channel
+# YouTube 内嵌视频无痕域名
+DOMAIN-SUFFIX,youtube-nocookie.com,HF-Multi-Channel
+
+# Vimeo (很多开源项目主页、顶级学术会议官网喜欢用它内嵌视频)
+DOMAIN-SUFFIX,vimeo.com,HF-Multi-Channel
+DOMAIN-SUFFIX,vimeocdn.com,HF-Multi-Channel
+
+# Coursera & Udemy (国外经典的计算机与 AI 公开课平台)
+DOMAIN-SUFFIX,coursera.org,HF-Multi-Channel
+DOMAIN-SUFFIX,udemy.com,HF-Multi-Channel
+DOMAIN-SUFFIX,udemycdn.com,HF-Multi-Channel
+
+# Twitch (如果偶尔会看一些国外开发者的 Live Coding 直播)
+DOMAIN-SUFFIX,twitch.tv,HF-Multi-Channel
+DOMAIN-SUFFIX,ttvnw.net,HF-Multi-Channel
+DOMAIN-SUFFIX,jtvnw.net,HF-Multi-Channel
 # Google Drive
 DOMAIN-SUFFIX,drive.google.com,HF-Multi-Channel
 DOMAIN-SUFFIX,googleusercontent.com,HF-Multi-Channel
@@ -49,36 +71,62 @@ DOMAIN-SUFFIX,laion.ai,HF-Multi-Channel
 DOMAIN-SUFFIX,storage.googleapis.com,HF-Multi-Channel
 DOMAIN-SUFFIX,s3.amazonaws.com,HF-Multi-Channel
 
-# --- 5. 补充：代码与 Agent 框架依赖获取 ---
+# --- 5. 代码、Agent 框架与 AI 开发环境依赖 ---
 # GitHub
 DOMAIN-SUFFIX,github.com,HF-Multi-Channel
 DOMAIN-SUFFIX,githubusercontent.com,HF-Multi-Channel
 DOMAIN-SUFFIX,raw.githubusercontent.com,HF-Multi-Channel
+# --- 6. AI 编程辅助 (GitHub Copilot & VS Code) ---
+# GitHub Copilot API
+DOMAIN-SUFFIX,githubcopilot.com,HF-Multi-Channel
 
+# Azure & Microsoft 遥测/遥控数据 (Copilot 和 VS Code 强依赖这些端点来验证状态)
+DOMAIN-SUFFIX,applicationinsights.azure.com,HF-Multi-Channel
+DOMAIN,mobile.events.data.microsoft.com,HF-Multi-Channel
 
-DOMAIN-SUFFIX,apache.org,🔰 国外流量
-DOMAIN-SUFFIX,docker.io,🔰 国外流量
-DOMAIN-SUFFIX,docker.com,🔰 国外流量
-DOMAIN-SUFFIX,elastic.co,🔰 国外流量
-DOMAIN-SUFFIX,elastic.com,🔰 国外流量
-DOMAIN-SUFFIX,gcr.io,🔰 国外流量
-DOMAIN-SUFFIX,gitlab.com,🔰 国外流量
-DOMAIN-SUFFIX,gitlab.io,🔰 国外流量
-DOMAIN-SUFFIX,jitpack.io,🔰 国外流量
-DOMAIN-SUFFIX,maven.org,🔰 国外流量
-DOMAIN-SUFFIX,medium.com,🔰 国外流量
-DOMAIN-SUFFIX,mvnrepository.com,🔰 国外流量
-DOMAIN-SUFFIX,quay.io,🔰 国外流量
-DOMAIN-SUFFIX,reddit.com,🔰 国外流量
-DOMAIN-SUFFIX,redhat.com,🔰 国外流量
-DOMAIN-SUFFIX,sonatype.org,🔰 国外流量
-DOMAIN-SUFFIX,sourcegraph.com,🔰 国外流量
-DOMAIN-SUFFIX,spring.io,🔰 国外流量
-DOMAIN-SUFFIX,spring.net,🔰 国外流量
-DOMAIN-SUFFIX,stackoverflow.com,🔰 国外流量
-DOMAIN-SUFFIX,github.com,🔰 国外流量
-DOMAIN-SUFFIX,github.io,🔰 国外流量
-DOMAIN-SUFFIX,githubapp.com,🔰 国外流量
-DOMAIN-SUFFIX,githubassets.com,🔰 国外流量
-DOMAIN-SUFFIX,githubusercontent.com,🔰 国外流量
+# Anaconda / Miniconda (环境构建)
+DOMAIN-SUFFIX,anaconda.com,HF-Multi-Channel
+DOMAIN-SUFFIX,anaconda.org,HF-Multi-Channel
 
+# PyPI (pip 包管理源，跑模型经常需要拉取依赖)
+DOMAIN-SUFFIX,pypi.org,HF-Multi-Channel
+DOMAIN-SUFFIX,pythonhosted.org,HF-Multi-Channel
+
+# ==========================================
+# 娱乐流媒体分流规则 (Netflix, Disney+, Spotify 等)
+# ==========================================
+
+# --- 7. Netflix (网飞) ---
+DOMAIN-SUFFIX,netflix.com,HF-Multi-Channel
+DOMAIN-SUFFIX,netflix.net,HF-Multi-Channel
+DOMAIN-SUFFIX,nflximg.com,HF-Multi-Channel
+DOMAIN-SUFFIX,nflximg.net,HF-Multi-Channel
+DOMAIN-SUFFIX,nflxvideo.net,HF-Multi-Channel
+DOMAIN-SUFFIX,nflxext.com,HF-Multi-Channel
+DOMAIN-SUFFIX,nflxso.net,HF-Multi-Channel
+
+# --- 8. Disney+ (迪士尼+) ---
+DOMAIN-SUFFIX,disneyplus.com,HF-Multi-Channel
+DOMAIN-SUFFIX,disney-plus.net,HF-Multi-Channel
+DOMAIN-SUFFIX,disneystreaming.com,HF-Multi-Channel
+DOMAIN-SUFFIX,dssott.com,HF-Multi-Channel
+DOMAIN-SUFFIX,bamgrid.com,HF-Multi-Channel
+DOMAIN-SUFFIX,cdn.registerdisney.go.com,HF-Multi-Channel
+
+# --- 9. Spotify (声田音乐) ---
+DOMAIN-KEYWORD,spotify,HF-Multi-Channel
+DOMAIN-SUFFIX,spotify.com,HF-Multi-Channel
+DOMAIN-SUFFIX,scdn.co,HF-Multi-Channel
+DOMAIN-SUFFIX,spotifycdn.com,HF-Multi-Channel
+DOMAIN-SUFFIX,spotifycdn.net,HF-Multi-Channel
+
+# --- 10. Prime Video (亚马逊视频) ---
+DOMAIN-SUFFIX,primevideo.com,HF-Multi-Channel
+DOMAIN-SUFFIX,aiv-cdn.net,HF-Multi-Channel
+DOMAIN-SUFFIX,aiv-delivery.net,HF-Multi-Channel
+DOMAIN-SUFFIX,amazonvideo.com,HF-Multi-Channel
+
+# --- 11. HBO Max / Max ---
+DOMAIN-SUFFIX,max.com,HF-Multi-Channel
+DOMAIN-SUFFIX,hbomax.com,HF-Multi-Channel
+DOMAIN-SUFFIX,hbomaxcdn.com,HF-Multi-Channel
